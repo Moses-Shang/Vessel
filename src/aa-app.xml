@@ -1,0 +1,24 @@
+<application xmlns="http://ns.adobe.com/air/application/2.0">
+  <id>aa</id>
+  <filename>aa</filename>
+  <name>aa</name>
+  <version>v1</version>
+  <initialWindow>
+    <content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+    <title>aa</title>
+    <systemChrome>standard</systemChrome>
+    <transparent>false</transparent>
+    <minimizable>false</minimizable>
+    <maximizable>false</maximizable>
+    <resizable>false</resizable>
+    <width>700</width>
+    <height>500</height>
+  </initialWindow>
+  <supportedProfiles>extendedDesktop desktop</supportedProfiles>
+  <icon>
+    <image16x16>assets/launchpad_default_icon16.png</image16x16>
+    <image32x32>assets/launchpad_default_icon32.png</image32x32>
+    <image48x48>assets/launchpad_default_icon48.png</image48x48>
+    <image128x128>assets/launchpad_default_icon128.png</image128x128>
+  </icon>
+</application>

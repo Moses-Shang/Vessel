@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onCreationComplete()" title="Native Window Alert Test">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.core.Window;
+			import com.adobe.air.alert.NativeAlert;
+			import com.adobe.air.alert.AlertEvent;
+			
+			private const iconURL: String = "AIR_logo.png";
+			private var bmp: Bitmap = null;
+			private var windowCount:uint;
+			[Bindable] private var openedWindows:ArrayCollection;
+			
+			private function onCreationComplete(): void
+			{
+				this.windowCount = 1;
+				this.openedWindows = new ArrayCollection();
+				
+				var loader: Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+				
+				var request: URLRequest = new URLRequest(iconURL);
+				loader.load(request);
+				
+				this.populateParentWindowSelection();
+			}
+			
+			private function completeHandler(event: Event): void
+			{
+				bmp = Bitmap(Loader(event.target.loader).content);
+			}
+			
+			private function ioErrorHandler(event: IOErrorEvent): void
+			{
+				trace("Unable to load image: " + iconURL);
+			}
+			
+			private function onBtnClick(): void
+			{
+				if (chkShowIcon.selected)
+				{
+					NativeAlert.show(alertMessage.text, alertTitle.text, NativeAlert.OK | NativeAlert.CANCEL, modal.selected, parentWindows.selectedItem.data, closeHandler, bmp);
+				}
+				else
+				{
+					NativeAlert.show(alertMessage.text, alertTitle.text, NativeAlert.OK | NativeAlert.CANCEL, modal.selected, parentWindows.selectedItem.data, closeHandler);
+				}
+			}
+			
+			private function onOpenTestWindow():void
+			{
+				var initOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
+				var win:NativeWindow = new NativeWindow(initOptions);
+				win.title = "Test Window #" + this.windowCount++;
+				win.width = 300;
+				win.height = 300;
+				win.addEventListener(Event.CLOSE, populateParentWindowSelection);
+				win.stage.align = StageAlign.TOP_LEFT;
+				win.stage.scaleMode = StageScaleMode.NO_SCALE;
+				win.visible = true;
+				this.populateParentWindowSelection();
+			}
+			
+			private function closeHandler(event: AlertEvent): void
+			{
+				trace(event.detail);
+			}
+			
+			private function populateParentWindowSelection(e:Event = null):void
+			{
+				this.openedWindows.removeAll();
+				openedWindows.addItem({label:"None", data:null});
+				for each (var win:NativeWindow in NativeApplication.nativeApplication.openedWindows)
+				{
+					openedWindows.addItem({label:win.title, data:win});
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:TextInput id="alertTitle" text="Alert Title"/>
+	<mx:TextArea text="This is sample text" id="alertMessage" height="100" width="300"/>
+	
+	<mx:HBox>
+		<mx:CheckBox label="Show Icon" id="chkShowIcon"/>
+		<mx:CheckBox label="Modal" id="modal"/>
+		<mx:Button label="Open Blank Window" click="onOpenTestWindow()"/>
+	</mx:HBox>
+	
+	<mx:HBox>
+		<mx:Label text="Parent Window"/>
+		<mx:ComboBox id="parentWindows" dataProvider="{openedWindows}"/>
+	</mx:HBox>
+	
+	<mx:Button label="Open Alert" click="onBtnClick()"/>
+	
+</mx:WindowedApplication>

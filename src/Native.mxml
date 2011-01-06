@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication creationComplete="onCreationComplete()" layout="absolute"
+						xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						xmlns:s="library://ns.adobe.com/flex/spark" 
+						xmlns:mx="library://ns.adobe.com/flex/mx" >
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.air.notification.VideoNotification;
+			import com.adobe.air.notification.NotificationClickedEvent;
+			import com.adobe.air.notification.Purr;
+			import com.adobe.air.notification.AbstractNotification;
+			import com.adobe.air.notification.Notification;
+			import mx.utils.StringUtil;
+			
+			private const iconURL: String = "AIR_logo.png";
+			private var bmp: Bitmap = null;
+			private var count:uint;
+			private var timer:Timer;
+			private var purr:Purr = new Purr(1);
+			private var fileToOpen:File;
+			private var sndFileToOpen:File;
+			
+			private function onCreationComplete(): void
+			{
+				var loader: Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+				
+				var request: URLRequest = new URLRequest(iconURL);
+				loader.load(request);
+				
+				timer = new Timer(3000, 1);
+				timer.addEventListener(TimerEvent.TIMER,
+					function(e:TimerEvent):void
+					{
+						purr.alert(alertType.selectedLabel, NativeApplication.nativeApplication.activeWindow);
+					});
+			}
+			
+			private function completeHandler(event: Event): void
+			{
+				bmp = Bitmap(Loader(event.target.loader).content);
+				purr.setIcons([bmp.bitmapData], "This is tooltip");
+				var m: NativeMenu = new NativeMenu();
+				m.addItem(new NativeMenuItem('Menu Item 1'));
+				m.addItem(new NativeMenuItem('Menu Item 2'));
+				purr.setMenu(m);
+			}
+			
+			private function ioErrorHandler(event: IOErrorEvent): void
+			{
+				trace("Unable to load image: " + iconURL);
+			}
+			
+			private function addNotification(where: String): void
+			{
+				var title:String = "This is a title";
+				if (!notifyVideo.selected)
+				{
+					var message:String = "This is a message #" + (++count);
+					var msg: String = message;
+					var icon:Bitmap = (notifyIcon.selected) ? bmp : null;
+					if (noEvents.selected)
+					{
+						purr.addTextNotificationByParams(title, message, where, 5, icon);
+					}
+					else
+					{
+						var n:Notification = new Notification(title, message, where, 5, icon);
+						n.id = String(count);
+						n.addEventListener(NotificationClickedEvent.NOTIFICATION_CLICKED_EVENT,
+							function(e:NotificationClickedEvent):void
+							{
+								trace("You clicked on notification: " + AbstractNotification(e.target).id);
+							});
+						purr.addNotification(n);
+					}
+				}
+				else
+				{
+					var n1: VideoNotification = new VideoNotification(title, StringUtil.trim(videoFile.text), where, 20);
+					n1.height = n1.width;
+					if (!noEvents.selected)
+					{
+						n1.id = String(count);
+						n1.addEventListener(NotificationClickedEvent.NOTIFICATION_CLICKED_EVENT,
+							function(e:NotificationClickedEvent):void
+							{
+								trace("You clicked on notification: " + AbstractNotification(e.target).id);
+							});
+					}
+					purr.addNotification(n1);
+				}
+			}
+			
+			private function alert(): void
+			{
+				timer.start();
+			}
+			
+			private function pause(): void
+			{
+				pauseButton.enabled = false;
+				resumeButton.enabled = true;
+				this.purr.pause();
+			}
+			
+			private function resume():void
+			{
+				pauseButton.enabled = true;
+				resumeButton.enabled = false;
+				this.purr.resume();
+			}
+			
+			private function fileOpen(): void
+			{
+				fileToOpen = new File();
+				try
+				{
+					fileToOpen.browseForOpen("Open", [new FileFilter("Flash Videos", "*.flv")]);
+					fileToOpen.addEventListener(Event.SELECT, fileSelected);
+				}
+				catch (error:Error)
+				{
+					trace("Failed:", error.message);
+				}
+			}
+			
+			private function fileSelected(event: Event): void 
+			{
+				videoFile.text = File(event.target).url;
+			}
+			
+			private function soundFileOpen(): void
+			{
+				sndFileToOpen = new File();
+				try
+				{
+					sndFileToOpen.browseForOpen("Open", [new FileFilter("Sounds", "*.mp3")]);
+					sndFileToOpen.addEventListener(Event.SELECT, soundFileSelected);
+				}
+				catch (error:Error)
+				{
+					trace("Failed:", error.message);
+				}
+			}
+			
+			private function soundFileSelected(event: Event): void 
+			{
+				soundFile.text = File(event.target).url;
+				openSound();
+			}
+			
+			private function openSound(): void
+			{
+				if (StringUtil.trim(soundFile.text) != '')
+				{
+					var request:URLRequest = new URLRequest(soundFile.text);
+					var soundFactory:Sound = new Sound();
+					soundFactory.addEventListener(Event.COMPLETE, soundcompleteHandler);
+					soundFactory.addEventListener(Event.ID3, id3Handler);
+					soundFactory.addEventListener(IOErrorEvent.IO_ERROR, soundioErrorHandler);
+					soundFactory.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+					soundFactory.load(request);
+					purr.notificationSound = soundFactory;
+				}
+				else
+				{
+					purr.notificationSound = null;
+				}
+			}
+			
+			private function soundcompleteHandler(event:Event):void 
+			{
+				trace("completeHandler: " + event);
+			}
+			
+			private function id3Handler(event:Event):void 
+			{
+				trace("id3Handler: " + event);
+			}
+			
+			private function soundioErrorHandler(event:Event):void 
+			{
+				trace("ioErrorHandler: " + event);
+			}
+			
+			private function progressHandler(event:ProgressEvent):void 
+			{
+				trace("progressHandler: " + event);
+			}
+		]]>
+	</fx:Script>
+	<mx:Button click="addNotification(AbstractNotification.TOP_LEFT)" label="Top Left" top="2" left="2"/>
+	<mx:Button click="addNotification(AbstractNotification.TOP_RIGHT)" label="Top Right" top="2" right="2"/>
+	<mx:Button click="addNotification(AbstractNotification.BOTTOM_RIGHT)" label="Bottom Right" right="2" bottom="2"/>
+	<mx:Button click="addNotification(AbstractNotification.BOTTOM_LEFT)" label="Bottom Left" left="2" bottom="2"/>
+	<mx:Box width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
+		<mx:VBox>
+			<mx:HBox>
+				<mx:ComboBox id="alertType">
+					<mx:dataProvider>
+						<fx:Array>
+							<fx:String>{NotificationType.INFORMATIONAL}</fx:String>
+							<fx:String>{NotificationType.CRITICAL}</fx:String>
+						</fx:Array>
+					</mx:dataProvider>
+				</mx:ComboBox>
+				<mx:Button label="Alert in 3 seconds" click="alert();"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:Button id="pauseButton" label="Pause" click="pause();"/>
+		<mx:Button id="resumeButton" label="Resume" click="resume()" enabled="false"/>
+		<mx:Button id="gcButton" label="System.gc()" click="System.gc();"/>
+		<mx:Grid>
+			<mx:GridRow>
+				<mx:GridItem>
+					<mx:HBox>
+						<mx:RadioButton id="notifyIcon" groupName="notifiationType" label="Show icon" selected="true"/>
+						<mx:RadioButton id="notifyVideo" groupName="notifiationType" label="Show video"/>
+						<mx:RadioButton id="notifyNone" groupName="notifiationType" label="None"/>
+					</mx:HBox>
+				</mx:GridItem>
+			</mx:GridRow>
+			<mx:GridRow>
+				<mx:GridItem>
+					<mx:HBox width="100%">
+						<mx:Label text="Video File" enabled="{notifyVideo.selected}"/>
+						<mx:TextInput id="videoFile" width="200" enabled="{notifyVideo.selected}"/>
+						<mx:Button label="..." width="20" enabled="{notifyVideo.selected}"
+								   paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" click="fileOpen()"/>
+					</mx:HBox>
+				</mx:GridItem>
+			</mx:GridRow>
+			<mx:GridRow>
+				<mx:GridItem>
+					<mx:RadioButton groupName="getEvents" id="yesEvents" label="Capture click event" selected="true"/>
+				</mx:GridItem>
+			</mx:GridRow>
+			<mx:GridRow>
+				<mx:GridItem>
+					<mx:RadioButton groupName="getEvents" id="noEvents" label="Don't capture click event"/>
+				</mx:GridItem>
+			</mx:GridRow>
+			<mx:GridRow>
+				<mx:GridItem>
+					<mx:HBox width="100%">
+						<mx:Label text="Sound File"/>
+						<mx:TextInput id="soundFile" width="200" keyUp="openSound()"/>
+						<mx:Button label="..." width="20"
+								   paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" click="soundFileOpen()"/>
+					</mx:HBox>
+				</mx:GridItem>
+			</mx:GridRow>
+		</mx:Grid>
+	</mx:Box>
+</mx:WindowedApplication>

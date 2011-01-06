@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" applicationComplete="applicationCompleteHandler(event)"
+					   skinClass="mx.vessel.skins.VesselApplicationSkin" backgroundAlpha="0" >
+
+
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[ResourceBundle("resources")]
+	</fx:Metadata> 
+	<fx:Script>
+		<![CDATA[
+			import flash.events.ContextMenuEvent;
+			import flash.text.engine.ElementFormat;
+			import flash.text.engine.FontDescription;
+			import flash.text.engine.TextBlock;
+			import flash.text.engine.TextLine;
+			import flash.ui.ContextMenu;
+			import flash.ui.ContextMenuItem;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.vessel.skins.VesselApplicationSkin;
+			
+			import spark.events.IndexChangeEvent;
+			import spark.skins.spark.ApplicationSkin;
+			
+			[Bindable]
+			public var locales:ArrayCollection = new ArrayCollection([{label:"English (United States)", locale:"en_US"},
+				{label:"Chinaese (Denmark)", locale:"zh_CN"}]);
+			
+			protected function applicationCompleteHandler(event:FlexEvent):void
+			{
+				new VesselApplicationSkin;
+				Alert.show();
+				// 为鼠标右键添加关闭当前浏览器窗口的菜单
+				var contextMenu : ContextMenu = new ContextMenu();
+				contextMenu.hideBuiltInItems(); // 隐藏一些内建的鼠标右键菜单项
+				
+				var contextMenuItem : ContextMenuItem = new ContextMenuItem("close");
+				contextMenu.customItems.push(contextMenuItem);
+				var app = this;
+				contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event : ContextMenuEvent) : void{
+					app.nativeWindow.close();
+				});
+				
+				
+				this.contextMenu = contextMenu; // 这里的this为Application对象  this可以换成其他组件
+				
+				
+				//拖动
+				var window:NativeWindow=stage.nativeWindow;
+				this.addEventListener(MouseEvent.MOUSE_DOWN,tuo);
+				function tuo(evt:Event):void {
+					window.startMove();
+				} 
+			}
+			
+
+			protected function combobox1_changeHandler(event:IndexChangeEvent):void
+			{
+				resourceManager.localeChain = [localeComboBox.selectedItem.locale];
+			}
+
+
+			
+
+		]]>
+		</fx:Script>
+	<s:Label x="32" y="96"  width="192" text="{resourceManager.getString('resources','contact.title')}"/>
+	<s:ComboBox id="localeComboBox" x="32" y="25" dataProvider="{locales}" change="combobox1_changeHandler(event)"/>
+	<s:SkinnableContainer x="24" y="10" width="628" height="438">
+		  
+	</s:SkinnableContainer>
+</s:WindowedApplication>
