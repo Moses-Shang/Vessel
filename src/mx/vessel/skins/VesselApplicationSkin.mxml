@@ -95,9 +95,7 @@
     </s:Rect>
 	
 	
-	<as:MsnBackground id="backgroundRect" height="400">
-		
-	</as:MsnBackground>
+	<!--<as:MsnBackground id="backgroundRect" height="400"></as:MsnBackground>-->
 	
     <!-- layer 2: content + status bar -->
     <s:Group left="0" right="0" top="0" bottom="0" minHeight="24" minWidth="0" >

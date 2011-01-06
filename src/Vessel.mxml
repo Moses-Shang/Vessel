@@ -37,7 +37,7 @@
 			
 			protected function applicationCompleteHandler(event:FlexEvent):void
 			{
-				new VesselApplicationSkin;
+				
 				Alert.show();
 				// 为鼠标右键添加关闭当前浏览器窗口的菜单
 				var contextMenu : ContextMenu = new ContextMenu();
@@ -45,7 +45,7 @@
 				
 				var contextMenuItem : ContextMenuItem = new ContextMenuItem("close");
 				contextMenu.customItems.push(contextMenuItem);
-				var app = this;
+				var app:window = this;
 				contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event : ContextMenuEvent) : void{
 					app.nativeWindow.close();
 				});
