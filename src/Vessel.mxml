@@ -45,7 +45,7 @@
 				
 				var contextMenuItem : ContextMenuItem = new ContextMenuItem("close");
 				contextMenu.customItems.push(contextMenuItem);
-				var app:window = this;
+				var app:WindowedApplication = this;
 				contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event : ContextMenuEvent) : void{
 					app.nativeWindow.close();
 				});
