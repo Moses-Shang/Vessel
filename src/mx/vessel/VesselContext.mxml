@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fx:Object xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:data="com.adobe.cairngorm.integration.data.*"
+		   xmlns:pres="com.chinascopefinancial.kiwi.datagrid.presentation.*"
+		   xmlns:app="com.chinascopefinancial.kiwi.datagrid.application.*"
+		   xmlns:domain="com.chinascopefinancial.kiwi.datagrid.domain.*"
+		   xmlns:infra="com.chinascopefinancial.kiwi.datagrid.infrastructure.*" 
+		   xmlns:pa="http://www.spicefactory.org/parsley">
+	<fx:Script>
+		<![CDATA[
+			//import com.chinascopefinancial.kiwi.datagrid.presentation.ColumnSelectPanelPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+		<!-- Presentation -->
+		<!--<pres:ToolBarPM />
+		<pres:GridCanvasPM />
+		
+		<pa:Object type="{ColumnSelectPanelPM}" />-->
+		
+		<!-- Application -->
+		<!--<app:ExportCommand />
+		<app:JSInitCommand />
+		<app:SingleSettingCommand/>
+		
+		<app:SettingCommand/>
+		<app:SettingDataCommand/>
+		
+		<app:DynamicUrlDataCommand/>-->
+		
+		<!-- Domain 
+		<domain:GridDatas />
+		<domain:GlobalConfig />
+		<domain:KiwiStatus />
+		<domain:QuickSearchDatas />-->
+		
+		
+		
+		<!-- Infrastructure 
+		<infra:AlertHandler/>-->
+		
+	</fx:Declarations>
+	
+	
+</fx:Object>
