@@ -3,7 +3,7 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   xmlns:sf="http://www.spicefactory.org/parsley"
-					    applicationComplete="applicationCompleteHandler(event)"
+					   applicationComplete="applicationCompleteHandler(event)"
 					   skinClass="mx.vessel.skins.VesselApplicationSkin" backgroundAlpha="0.9">
 
 
@@ -42,7 +42,7 @@
 			
 			protected function applicationCompleteHandler(event:FlexEvent):void
 			{
-				
+				//Alert.
 				
 				// 为鼠标右键添加关闭当前浏览器窗口的菜单
 				var contextMenu : ContextMenu = new ContextMenu();
@@ -82,4 +82,16 @@
 	<s:ComboBox id="localeComboBox" x="32" y="25" dataProvider="{locales}" change="combobox1_changeHandler(event)"/>
 	<s:Button x="195" y="228" label="按钮" fontSize="12" skinClass="mx.vessel.skins.btn.BlueButtonSkin" />
 	
+	<fx:Style>
+		@namespace mx "library://ns.adobe.com/flex/halo";
+		
+		mx|Alert {
+			borderSkin: ClassReference("mx.vessel.skins.AlertSkin");
+		}
+	</fx:Style>
+	<s:Button id="btn"
+			  label="show Alert"
+			  click="Alert.show('The quick brown fox jumps over the lazy dog.', 'Alert title');"
+			  horizontalCenter="0"
+			  verticalCenter="0" />
 </s:WindowedApplication>
