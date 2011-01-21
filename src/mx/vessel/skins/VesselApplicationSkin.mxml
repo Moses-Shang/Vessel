@@ -69,8 +69,11 @@
          */
         override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number) : void
         {
-            backgroundFill.color = getStyle("backgroundColor");
-            backgroundFill.alpha = getStyle("backgroundAlpha");
+            //backgroundFill.color = getStyle("backgroundColor");
+            ge1.alpha = getStyle("backgroundAlpha");
+			ge2.alpha = getStyle("backgroundAlpha");
+			ge3.alpha = getStyle("backgroundAlpha");
+			ge4.alpha = getStyle("backgroundAlpha");
             super.updateDisplayList(unscaledWidth, unscaledHeight);
         }
 		
@@ -87,16 +90,20 @@
 
     <!-- layer 1: background fill -->
     <!--- Defines the background color of the skin. -->
-    <s:Rect id="backgroundRectold" left="0" right="0" top="0" bottom="0">
-        <s:fill>
-            <!--- @private -->
-            <s:SolidColor id="backgroundFill" />
-        </s:fill>
-    </s:Rect>
-	
-	
-	<!--<as:MsnBackground id="backgroundRect" height="400"></as:MsnBackground>-->
-	
+	<s:Rect id="backgroundRect" left="0" right="0" top="0" bottom="0" radiusX="2" >
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#3380B5" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill >
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry id="ge1"  color="#CAEAF8" ratio="0"/>
+				<s:GradientEntry id="ge2"  color="#ABDFF3" ratio="0.1450980392156863"/>
+				<s:GradientEntry id="ge3"  color="#ABDFF3" ratio="0.7647058823529411"/>
+				<s:GradientEntry id="ge4"  color="#C9EAF8" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+
     <!-- layer 2: content + status bar -->
     <s:Group left="0" right="0" top="0" bottom="0" minHeight="24" minWidth="0" >
         <s:layout>
@@ -122,7 +129,7 @@
             </s:Rect>-->
             
             <!-- status bar highlight -->
-          <!--  <s:Rect left="1" right="1" top="1" bottom="0" >
+          <!--<s:Rect left="1" right="1" top="1" bottom="0" >
                <s:stroke>
                     <s:LinearGradientStroke rotation="90" weight="1">
                         <s:GradientEntry color="0xEAEAEA" />

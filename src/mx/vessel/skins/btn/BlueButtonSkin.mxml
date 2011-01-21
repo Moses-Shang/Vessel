@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
+	<fx:Metadata><![CDATA[
+		[HostComponent("spark.components.Button")]
+	]]></fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect height="20" id="rect2" includeIn="up" radiusX="2" radiusY="2" width="69" x="0.5" y="0.5">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#3380B5" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry alpha="1.0" color="#C8E3F6" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#9AC9E9" ratio="0.43137254901960786"/>
+				<s:GradientEntry alpha="1.0" color="#68C0E7" ratio="0.49019607843137253"/>
+				<s:GradientEntry alpha="1.0" color="#84C7EB" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect height="18" id="rect0" includeIn="up" radiusX="1" width="67" x="1.5" y="1.5">
+		<s:stroke>
+			<s:LinearGradientStroke rotation="90">
+				<s:GradientEntry alpha="0.25" color="#FFFFFF" ratio="0.2"/>
+				<s:GradientEntry alpha="0.0" color="#FFFFFF" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+	<s:Rect height="20" id="rect3" includeIn="over" radiusX="2" radiusY="2" width="69" x="0.5" y="0.5">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#3380B5" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry alpha="1.0" color="#A7D3F2" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#5CABE0" ratio="0.43137254901960786"/>
+				<s:GradientEntry alpha="1.0" color="#339ECC" ratio="0.49019607843137253"/>
+				<s:GradientEntry alpha="1.0" color="#84C7EB" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect height="18" id="rect4" includeIn="over" radiusX="1" width="67" x="1.5" y="1.5">
+		<s:stroke>
+			<s:LinearGradientStroke rotation="90">
+				<s:GradientEntry alpha="0.25" color="#FFFFFF" ratio="0.2"/>
+				<s:GradientEntry alpha="0.0" color="#FFFFFF" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+	<s:Rect height="20" id="rect1" includeIn="down,over" radiusX="2" radiusY="2" width="69" x="0.5" y="0.5" visible.over="false">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#3380B5" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry alpha="1.0" color="#C8E3F6" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#9AC9E9" ratio="0.43137254901960786"/>
+				<s:GradientEntry alpha="1.0" color="#A2CEE0" ratio="0.49019607843137253"/>
+				<s:GradientEntry alpha="1.0" color="#84C7EB" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect height="18" id="rect5" includeIn="down" radiusX="1" width="67" x="1.5" y="1.5">
+		<s:stroke>
+			<s:LinearGradientStroke rotation="90">
+				<s:GradientEntry alpha="0.25" color="#FFFFFF" ratio="0.2"/>
+				<s:GradientEntry alpha="0.0" color="#FFFFFF" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+	<s:Rect height="20" id="rect6" includeIn="disabled" radiusX="2" radiusY="2" width="69" x="0.5" y="0.5">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#608BA8" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry alpha="1.0" color="#C8E3F6" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#D3E7F4" ratio="0.38823529411764707"/>
+				<s:GradientEntry alpha="1.0" color="#D1E1E8" ratio="0.49019607843137253"/>
+				<s:GradientEntry alpha="1.0" color="0xD2E4EF" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect height="18" id="rect7" includeIn="disabled" radiusX="1" width="67" x="1.5" y="1.5">
+		<s:stroke>
+			<s:LinearGradientStroke rotation="90">
+				<s:GradientEntry alpha="0.25" color="#FFFFFF" ratio="0.2"/>
+				<s:GradientEntry alpha="0.0" color="#FFFFFF" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+	<s:RichText color="#2A3960" id="labelDisplay" tabStops="S0 S50" textAlign="center" width="68" x="1" y="6">
+		<s:filters>
+			<s:DropShadowFilter alpha="1" angle="45.0" blurX="4.0" blurY="4.0" color="#FFFFFF" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+		</s:filters>
+	</s:RichText>
+	<s:transitions>
+		<s:Transition fromState="up" toState="over" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect2}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{rect0}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{rect3}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{rect4}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>
